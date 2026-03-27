@@ -1,24 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+// HomePage Structure
+import Layout from './assets/components/Layout.jsx';
+import ArticlePage from './assets/pages/ArticlePage.jsx';
+import HomePage from './assets/pages/HomePage.jsx';
+import AboutPage from './assets/pages/AboutPage.jsx';
+
+const routes = [
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      {
+        path: '',
+        element: <HomePage />,
+      },
+      {
+        path: 'about',
+        element: <AboutPage />,
+      },
+      {
+        path: 'articles',
+        element: <ArticlePage />,
+      },
+    ],
+  },
+];
+
+const router = createBrowserRouter(routes);
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome to My React App</h1>
-        <p>
-          Name: Renan S. Turno<br/>
-          Email: turnors@students.national-u.edu.ph<br/>
-          Other Personal Info: <a href='https://github.com/nansu-cmd/turno-webprog.git'>My Repository</a>
-        </p>
-      </header>
-    </div>
-  )
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
-export default App
+export default App;
