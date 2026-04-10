@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 // HomePage Structure
-import Layout from './assets/components/Layout.jsx';
-import ArticlePage from './assets/pages/ArticlePage.jsx';
-import HomePage from './assets/pages/HomePage.jsx';
-import AboutPage from './assets/pages/AboutPage.jsx';
+import Layout from './components/Layout.jsx';
+import ArticlePage from './pages/ArticlePage.jsx';
+import HomePage from './pages/HomePage.jsx';
+import AboutPage from './pages/AboutPage.jsx';
 
 const routes = [
   {
