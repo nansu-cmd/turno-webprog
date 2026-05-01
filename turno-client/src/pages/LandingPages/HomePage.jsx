@@ -1,9 +1,8 @@
-import Button from "../components/Button.jsx";
+import Button from "../../components/Button.jsx";
 
 const HomePage = () => {
   return (
     <div className="flex w-full flex-col gap-12 sm:gap-16">
-      {/* Hero Section */}
       <section className="px-4 pt-12 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
@@ -32,7 +31,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* KPI Section */}
       <section className="bg-zinc-900 px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -53,7 +51,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Elements Section */}
       <section className="px-4 pb-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10">

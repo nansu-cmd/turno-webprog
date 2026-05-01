@@ -6,7 +6,6 @@ const Footer = () => {
             <div className="mx-auto max-w-7xl">
                 <div className="grid grid-cols-1 gap-12 md:grid-cols-4 lg:grid-cols-5">
                     
-                    {/* Column 1: Vongola Brand/Mission Statement */}
                     <div className="md:col-span-2 lg:col-span-2 flex flex-col items-center text-center md:items-start md:text-left">
                         <p className="text-xl font-extrabold uppercase tracking-[0.28em] text-zinc-900">
                             The Winged Clam
@@ -21,7 +20,6 @@ const Footer = () => {
                         </p>
                     </div>
 
-                    {/* Column 2: Navigation Section */}
                     <div className="flex flex-col items-center text-center md:items-start md:text-left">
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-900">
                             Navigation
@@ -45,14 +43,12 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Column 3: Follow Us Section (UPDATED TO TRIGGER 404) */}
                     <div className="flex flex-col items-center text-center md:items-start md:text-left">
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-900">
                             Follow Us
                         </h3>
                         <ul className="mt-6 space-y-4 text-sm">
                             <li>
-                                {/* Changed to <Link> pointing to a fake route */}
                                 <Link to="/classified/facebook" className="text-zinc-600 hover:text-zinc-900 transition-colors">
                                     Facebook
                                 </Link>
@@ -71,7 +67,6 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Bottom Bar: Copyright/Legal */}
                 <div className="mt-12 border-t border-zinc-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-zinc-500">
                         © {new Date().getFullYear()} Vongola Famiglia Archives. Classified 

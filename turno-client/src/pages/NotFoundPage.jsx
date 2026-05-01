@@ -13,7 +13,6 @@ function NotFoundPage() {
                     Lost in the Mist
                 </h1>
 
-                {/* UPDATED: Larger, themed image container */}
                 <div className="my-10 aspect-video w-full max-w-md overflow-hidden rounded-2xl border-4 border-zinc-900 bg-zinc-200 shadow-lg">
                     <img 
                         src="https://preview.redd.it/mist-guardian-chrome-mukuro-or-both-v0-1ywooo0nrc3f1.png?auto=webp&s=a96eb85170161b8de9035d8804e4944d02f8cdb9" 
