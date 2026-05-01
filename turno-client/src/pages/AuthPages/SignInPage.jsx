@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 
 const inputClasses =
-  'mt-2 w-full rounded-xl border border-zinc-300 bg-zinc-50 px-4 py-3.5 text-sm text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus:border-zinc-900 focus:bg-white focus:ring-4 focus:ring-zinc-900/10';
+  'mt-2 w-full rounded-xl border border-zinc-300 bg-zinc-50 px-4 py-3.5 text-sm text-zinc-900 outline-none transition-all placeholder:text-zinc-400 focus:border-orange-500 focus:bg-white focus:ring-4 focus:ring-orange-500/20';
 
 const actionButtonClassName = 'w-full rounded-xl py-3.5 text-[11px] font-bold tracking-[0.2em] transition-transform active:scale-[0.98]';
 
@@ -41,7 +41,7 @@ const SignInPage = () => {
             </label>
             <button
               type="button"
-              className="text-xs font-semibold text-orange-600 transition hover:text-orange-500"
+              className="text-xs font-bold text-orange-600 transition hover:text-orange-500"
             >
               Forgot Password?
             </button>
@@ -59,9 +59,9 @@ const SignInPage = () => {
           <input
             type="checkbox"
             id="remember-me"
-            className="h-4 w-4 cursor-pointer rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+            className="h-4 w-4 cursor-pointer rounded border-zinc-300 text-orange-600 focus:ring-orange-500"
           />
-          <label htmlFor="remember-me" className="cursor-pointer text-zinc-600 select-none">
+          <label htmlFor="remember-me" className="cursor-pointer font-medium text-zinc-600 select-none">
             Keep me logged in
           </label>
         </div>
@@ -86,11 +86,11 @@ const SignInPage = () => {
         </div>
       </form>
 
-      <div className="mt-8 text-center text-sm text-zinc-600">
+      <div className="mt-8 text-center text-sm font-medium text-zinc-600">
         Don't have an account?{' '}
         <Link
           to="/auth/signup"
-          className="font-bold text-zinc-900 underline decoration-zinc-300 underline-offset-4 transition hover:decoration-zinc-900"
+          className="font-bold text-orange-600 underline decoration-orange-300 underline-offset-4 transition hover:text-orange-500 hover:decoration-orange-500"
         >
           Sign Up
         </Link>
