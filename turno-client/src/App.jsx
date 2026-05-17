@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 
 // HomePage Structure
 import Layout from './layouts/Layout.jsx';
@@ -9,16 +9,29 @@ import ArticleListPage from './pages/LandingPages/ArticleListPage.jsx';
 
 // Auth Structure
 import AuthLayout from './layouts/AuthLayout.jsx';
-import SignInPage from './pages/AuthPages/SignInPage.jsx';
+import LoginPage from './pages/AuthPages/Login.jsx';
 import SignUpPage from './pages/AuthPages/SignUpPage.jsx';
 
-// Dashboard Structure (Added from image_2dbf63.png)
+// Dashboard Structure
 import DashLayout from './layouts/DashLayout.jsx';
 import DashboardPage from './pages/DashboardPages/DashboardPage.jsx';
 import ReportsPage from './pages/DashboardPages/ReportsPage.jsx';
 import UsersPage from './pages/DashboardPages/UsersPage.jsx';
+import DashArticleListPage from './pages/DashboardPages/DashArticleListPage.jsx';
 
 import NotFoundPage from './pages/NotFoundPage.jsx';
+
+const RequireAuth = ({ children }) => {
+  const token = localStorage.getItem('token');
+  if (!token) return <Navigate to="/auth/signin" replace />;
+  return children;
+};
+
+const RequireAdmin = ({ children }) => {
+  const type = localStorage.getItem('type');
+  if (type !== 'admin') return <Navigate to="/dashboard" replace />;
+  return children;
+};
 
 const routes = [
   {
@@ -26,22 +39,10 @@ const routes = [
     element: <Layout />,
     errorElement: <NotFoundPage />,
     children: [
-      {
-        path: '',
-        element: <HomePage />,
-      },
-      {
-        path: 'about',
-        element: <AboutPage />,
-      },
-      {
-        path: 'articles',
-        element: <ArticleListPage />,
-      },
-      {
-        path: 'articles/:name',
-        element: <ArticlePage />,
-      },
+      { path: '', element: <HomePage /> },
+      { path: 'about', element: <AboutPage /> },
+      { path: 'articles', element: <ArticleListPage /> },
+      { path: 'articles/:name', element: <ArticlePage /> },
     ],
   },
   {
@@ -49,33 +50,30 @@ const routes = [
     element: <AuthLayout />,
     errorElement: <NotFoundPage />,
     children: [
-      {
-        path: 'signin',
-        element: <SignInPage />,
-      },
-      {
-        path: 'signup',
-        element: <SignUpPage />,
-      },
+      { path: 'signin', element: <LoginPage /> },
+      { path: 'signup', element: <SignUpPage /> },
     ],
   },
   {
-    path: "dashboard/",
-    element: <DashLayout />,
+    path: 'dashboard/',
+    element: (
+      <RequireAuth>
+        <DashLayout />
+      </RequireAuth>
+    ),
     errorElement: <NotFoundPage />,
     children: [
+      { path: '', element: <DashboardPage /> },
+      { path: 'reports', element: <ReportsPage /> },
       {
-        path: "",
-        element: <DashboardPage />,
+        path: 'users',
+        element: (
+          <RequireAdmin>
+            <UsersPage />
+          </RequireAdmin>
+        ),
       },
-      {
-        path: "reports",
-        element: <ReportsPage />,
-      },
-      {
-        path: "users",
-        element: <UsersPage />,
-      },
+      { path: 'articles', element: <DashArticleListPage /> },
     ],
   },
 ];

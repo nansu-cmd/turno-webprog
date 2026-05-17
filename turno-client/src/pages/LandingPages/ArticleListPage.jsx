@@ -1,8 +1,41 @@
+import { useEffect, useState } from 'react';
 import Button from '../../components/Button';
 import ArticleList from '../../components/ArticleList';
-import articles from "../../data/article-content.js";
+import { fetchArticles } from '../../services/ArticleService';
 
 const ArticleListPage = () => {
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        let cancelled = false;
+        (async () => {
+            try {
+                const { data } = await fetchArticles();
+                if (cancelled) return;
+                const list = (data.articles || [])
+                    .filter((a) => a.isActive)
+                    .map((a) => ({
+                        name: a.slug,
+                        title: a.title,
+                        imageUrl: a.imageUrl,
+                        content: a.paragraphs || [],
+                    }));
+                setArticles(list);
+            } catch (err) {
+                if (!cancelled) {
+                    setError(err.response?.data?.message || 'Failed to load articles.');
+                }
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        })();
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
     return (
         <div className="flex w-full flex-col gap-6">
             <section className="border-y-2 border-zinc-900 bg-zinc-50 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
@@ -28,7 +61,15 @@ const ArticleListPage = () => {
                     <h2 className="mt-2 text-2xl font-semibold text-zinc-900">Vongola Articles</h2>
                 </div>
 
-                <ArticleList articles={articles} />
+                {loading ? (
+                    <p className="text-sm text-zinc-600">Loading articles…</p>
+                ) : error ? (
+                    <p className="text-sm font-semibold text-red-700">{error}</p>
+                ) : articles.length === 0 ? (
+                    <p className="text-sm text-zinc-600">No articles available yet.</p>
+                ) : (
+                    <ArticleList articles={articles} />
+                )}
             </section>
         </div>
     );

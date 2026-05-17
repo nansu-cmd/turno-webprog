@@ -45,6 +45,13 @@ const dashboardNavItems = [
     title: "Users",
     to: "/dashboard/users",
     icon: PeopleIcon,
+    adminOnly: true,
+  },
+  {
+    label: "Articles",
+    title: "Articles",
+    to: "/dashboard/articles",
+    icon: ArticleIcon,
   },
 ];
 
@@ -162,6 +169,12 @@ const DashLayout = () => {
   const pageTitle = getPageTitle(location.pathname);
   const navigate = useNavigate();
 
+  const userType = localStorage.getItem("type");
+  const firstName = localStorage.getItem("firstName");
+  const visibleNavItems = dashboardNavItems.filter(
+    (item) => !item.adminOnly || userType === "admin"
+  );
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -171,7 +184,12 @@ const DashLayout = () => {
   };
 
   const handleLogout = () => {
-    navigate("/");
+    localStorage.removeItem("token");
+    localStorage.removeItem("firstName");
+    localStorage.removeItem("lastName");
+    localStorage.removeItem("email");
+    localStorage.removeItem("type");
+    navigate("/auth/signin");
   };
 
   return (
@@ -195,7 +213,7 @@ const DashLayout = () => {
               component="div"
               sx={{ flexGrow: 1 }}
             >
-              {pageTitle}
+              {firstName ? `Welcome, ${firstName}` : pageTitle}
             </Typography>
             <Search>
               <SearchIconWrapper>
@@ -223,7 +241,7 @@ const DashLayout = () => {
           </DrawerHeader>
           <Divider />
           <List>
-            {dashboardNavItems.map(({ label, to, icon: Icon }) => (
+            {visibleNavItems.map(({ label, to, icon: Icon }) => (
               <ListItem key={to} disablePadding sx={{ display: "block" }}>
                 <ListItemButton
                   component={Link}
