@@ -8,16 +8,13 @@ const articleRoutes = require('./routes/articleRoutes');
 
 const app = express();
 
-connectDB();
-
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 
 const corsOptions = {
   origin: '*',
-  credentials: true,
+  credentials: false,
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
@@ -39,13 +36,35 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/users', userRoutes);
-app.use('/api/articles', articleRoutes);
+const withDatabase = async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Turno API is running' });
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
+app.use('/api/users', withDatabase, userRoutes);
+app.use('/api/articles', withDatabase, articleRoutes);
 
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Server Error' });
+  console.error(err.stack || err.message);
+  res.status(500).json({ message: err.message || 'Server Error' });
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app;
